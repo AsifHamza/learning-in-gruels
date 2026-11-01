@@ -1,0 +1,13 @@
+# Deliverable 01 — the environment.
+# Versions match the real capstone repo so the numbers match too.
+
+numpy==1.26.4
+gymnasium==0.29.1
+pettingzoo==1.24.3
+pygame==2.5.2
+pillow==10.3.0
+
+# For the notebooks.
+jupyter==1.0.0
+jupytext==1.16.2
+matplotlib==3.9.0

@@ -1,0 +1,622 @@
+{
+ "episodes": 10000,
+ "survival_by_rank": [
+  0.1599,
+  0.2922,
+  0.0991,
+  0.0527,
+  0.0388,
+  0.0326,
+  0.0383,
+  0.04,
+  0.0345,
+  0.0271,
+  0.0199,
+  0.0238,
+  0.028,
+  0.0357,
+  0.0774
+ ],
+ "stagnation_rate": 0.0,
+ "hard_cap_rate": 0.0,
+ "abstention_rate": 0.0002525375955162357,
+ "targeting_by_rank": [
+  0.9186215991116047,
+  0.9742268041237113,
+  0.8991474581622987,
+  0.7441037735849056,
+  0.5112047328791681,
+  0.3283790872530163,
+  0.21150749936446064,
+  0.1435513095042003,
+  0.11012927507772868,
+  0.0832721637713074,
+  0.07908858251465367,
+  0.09134615384615384,
+  0.12949995881044568,
+  0.26138629044625056,
+  0.8139705467471647
+ ],
+ "targeting_by_alive": {
+  "15": 0.25386458957459557,
+  "14": 0.28646896386120785,
+  "13": 0.3354241338112306,
+  "12": 0.3782655373971132,
+  "11": 0.4264094955489614,
+  "10": 0.47771654486641907,
+  "9": 0.5367957746478873,
+  "8": 0.5903579509195336,
+  "7": 0.6490437395273588,
+  "6": 0.7028542012240462,
+  "5": 0.7498047092958375,
+  "4": 0.7506632735935893,
+  "3": 0.5498511140774207
+ },
+ "switch_test": [
+  {
+   "seat": 0,
+   "switch": "shoot_strongest",
+   "staying": 0.1699,
+   "switching": 0.1606,
+   "gain": -0.009300000000000003,
+   "error": 0.006408192178766176,
+   "profitable": false
+  },
+  {
+   "seat": 0,
+   "switch": "shoot_weakest",
+   "staying": 0.1699,
+   "switching": 0.1764,
+   "gain": 0.006500000000000006,
+   "error": 0.00656962761501746,
+   "profitable": false
+  },
+  {
+   "seat": 0,
+   "switch": "coin_flip",
+   "staying": 0.1699,
+   "switching": 0.1638,
+   "gain": -0.006099999999999994,
+   "error": 0.006441840653105291,
+   "profitable": false
+  },
+  {
+   "seat": 0,
+   "switch": "always_miss",
+   "staying": 0.1699,
+   "switching": 0.0,
+   "gain": -0.1699,
+   "error": 0.003755449240770004,
+   "profitable": false
+  },
+  {
+   "seat": 1,
+   "switch": "shoot_strongest",
+   "staying": 0.2955,
+   "switching": 0.296,
+   "gain": 0.0005000000000000004,
+   "error": 0.0079053636854986,
+   "profitable": false
+  },
+  {
+   "seat": 1,
+   "switch": "shoot_weakest",
+   "staying": 0.2955,
+   "switching": 0.2126,
+   "gain": -0.08289999999999997,
+   "error": 0.0073687327947212205,
+   "profitable": false
+  },
+  {
+   "seat": 1,
+   "switch": "coin_flip",
+   "staying": 0.2955,
+   "switching": 0.2384,
+   "gain": -0.057099999999999984,
+   "error": 0.007558509310704062,
+   "profitable": false
+  },
+  {
+   "seat": 1,
+   "switch": "always_miss",
+   "staying": 0.2955,
+   "switching": 0.0,
+   "gain": -0.2955,
+   "error": 0.004562671914569357,
+   "profitable": false
+  },
+  {
+   "seat": 2,
+   "switch": "shoot_strongest",
+   "staying": 0.0887,
+   "switching": 0.0872,
+   "gain": -0.0015000000000000013,
+   "error": 0.0048992308580021,
+   "profitable": false
+  },
+  {
+   "seat": 2,
+   "switch": "shoot_weakest",
+   "staying": 0.0887,
+   "switching": 0.114,
+   "gain": 0.025300000000000003,
+   "error": 0.005318273310013316,
+   "profitable": true
+  },
+  {
+   "seat": 2,
+   "switch": "coin_flip",
+   "staying": 0.0887,
+   "switching": 0.107,
+   "gain": 0.018299999999999997,
+   "error": 0.0052147321120072886,
+   "profitable": true
+  },
+  {
+   "seat": 2,
+   "switch": "always_miss",
+   "staying": 0.0887,
+   "switching": 0.0,
+   "gain": -0.0887,
+   "error": 0.0028431023548229845,
+   "profitable": false
+  },
+  {
+   "seat": 3,
+   "switch": "shoot_strongest",
+   "staying": 0.0538,
+   "switching": 0.0484,
+   "gain": -0.005400000000000002,
+   "error": 0.003781804331268343,
+   "profitable": false
+  },
+  {
+   "seat": 3,
+   "switch": "shoot_weakest",
+   "staying": 0.0538,
+   "switching": 0.0596,
+   "gain": 0.0058,
+   "error": 0.004037341204307607,
+   "profitable": false
+  },
+  {
+   "seat": 3,
+   "switch": "coin_flip",
+   "staying": 0.0538,
+   "switching": 0.0572,
+   "gain": 0.0034000000000000002,
+   "error": 0.00398449344333756,
+   "profitable": false
+  },
+  {
+   "seat": 3,
+   "switch": "always_miss",
+   "staying": 0.0538,
+   "switching": 0.0,
+   "gain": -0.0538,
+   "error": 0.0022562260525044917,
+   "profitable": false
+  },
+  {
+   "seat": 4,
+   "switch": "shoot_strongest",
+   "staying": 0.0363,
+   "switching": 0.0318,
+   "gain": -0.004499999999999997,
+   "error": 0.003107407762106544,
+   "profitable": false
+  },
+  {
+   "seat": 4,
+   "switch": "shoot_weakest",
+   "staying": 0.0363,
+   "switching": 0.043,
+   "gain": 0.006699999999999998,
+   "error": 0.003424679693051599,
+   "profitable": false
+  },
+  {
+   "seat": 4,
+   "switch": "coin_flip",
+   "staying": 0.0363,
+   "switching": 0.0348,
+   "gain": -0.0015000000000000013,
+   "error": 0.0031962513981224944,
+   "profitable": false
+  },
+  {
+   "seat": 4,
+   "switch": "always_miss",
+   "staying": 0.0363,
+   "switching": 0.0,
+   "gain": -0.0363,
+   "error": 0.0018703558484951465,
+   "profitable": false
+  },
+  {
+   "seat": 5,
+   "switch": "shoot_strongest",
+   "staying": 0.031,
+   "switching": 0.0384,
+   "gain": 0.007399999999999997,
+   "error": 0.003223195309006266,
+   "profitable": false
+  },
+  {
+   "seat": 5,
+   "switch": "shoot_weakest",
+   "staying": 0.031,
+   "switching": 0.0324,
+   "gain": 0.0013999999999999985,
+   "error": 0.003045315747176309,
+   "profitable": false
+  },
+  {
+   "seat": 5,
+   "switch": "coin_flip",
+   "staying": 0.031,
+   "switching": 0.0382,
+   "gain": 0.007199999999999998,
+   "error": 0.0032174604892678945,
+   "profitable": false
+  },
+  {
+   "seat": 5,
+   "switch": "always_miss",
+   "staying": 0.031,
+   "switching": 0.0,
+   "gain": -0.031,
+   "error": 0.0017331762749357032,
+   "profitable": false
+  },
+  {
+   "seat": 6,
+   "switch": "shoot_strongest",
+   "staying": 0.0385,
+   "switching": 0.0406,
+   "gain": 0.0020999999999999977,
+   "error": 0.003390000442477847,
+   "profitable": false
+  },
+  {
+   "seat": 6,
+   "switch": "shoot_weakest",
+   "staying": 0.0385,
+   "switching": 0.0338,
+   "gain": -0.004700000000000003,
+   "error": 0.0031989509217867033,
+   "profitable": false
+  },
+  {
+   "seat": 6,
+   "switch": "coin_flip",
+   "staying": 0.0385,
+   "switching": 0.0412,
+   "gain": 0.002700000000000001,
+   "error": 0.0034062129997990435,
+   "profitable": false
+  },
+  {
+   "seat": 6,
+   "switch": "always_miss",
+   "staying": 0.0385,
+   "switching": 0.0,
+   "gain": -0.0385,
+   "error": 0.0019239997401247226,
+   "profitable": false
+  },
+  {
+   "seat": 7,
+   "switch": "shoot_strongest",
+   "staying": 0.0402,
+   "switching": 0.0442,
+   "gain": 0.0040000000000000036,
+   "error": 0.00350822861284723,
+   "profitable": false
+  },
+  {
+   "seat": 7,
+   "switch": "shoot_weakest",
+   "staying": 0.0402,
+   "switching": 0.0444,
+   "gain": 0.004200000000000002,
+   "error": 0.0035134205555270494,
+   "profitable": false
+  },
+  {
+   "seat": 7,
+   "switch": "coin_flip",
+   "staying": 0.0402,
+   "switching": 0.0432,
+   "gain": 0.0030000000000000027,
+   "error": 0.003482118320792675,
+   "profitable": false
+  },
+  {
+   "seat": 7,
+   "switch": "always_miss",
+   "staying": 0.0402,
+   "switching": 0.0,
+   "gain": -0.0402,
+   "error": 0.0019642800207709693,
+   "profitable": false
+  },
+  {
+   "seat": 8,
+   "switch": "shoot_strongest",
+   "staying": 0.0381,
+   "switching": 0.038,
+   "gain": -0.00010000000000000286,
+   "error": 0.003313010564426259,
+   "profitable": false
+  },
+  {
+   "seat": 8,
+   "switch": "shoot_weakest",
+   "staying": 0.0381,
+   "switching": 0.037,
+   "gain": -0.0011000000000000038,
+   "error": 0.0032849716893757243,
+   "profitable": false
+  },
+  {
+   "seat": 8,
+   "switch": "coin_flip",
+   "staying": 0.0381,
+   "switching": 0.0346,
+   "gain": -0.003500000000000003,
+   "error": 0.00321642767678678,
+   "profitable": false
+  },
+  {
+   "seat": 8,
+   "switch": "always_miss",
+   "staying": 0.0381,
+   "switching": 0.0,
+   "gain": -0.0381,
+   "error": 0.0019143769221341969,
+   "profitable": false
+  },
+  {
+   "seat": 9,
+   "switch": "shoot_strongest",
+   "staying": 0.0268,
+   "switching": 0.0306,
+   "gain": 0.003799999999999998,
+   "error": 0.0029224825063633828,
+   "profitable": false
+  },
+  {
+   "seat": 9,
+   "switch": "shoot_weakest",
+   "staying": 0.0268,
+   "switching": 0.028,
+   "gain": 0.0011999999999999997,
+   "error": 0.0028374946695985176,
+   "profitable": false
+  },
+  {
+   "seat": 9,
+   "switch": "coin_flip",
+   "staying": 0.0268,
+   "switching": 0.0202,
+   "gain": -0.006600000000000002,
+   "error": 0.002562531560781252,
+   "profitable": false
+  },
+  {
+   "seat": 9,
+   "switch": "always_miss",
+   "staying": 0.0268,
+   "switching": 0.0,
+   "gain": -0.0268,
+   "error": 0.0016149848296501117,
+   "profitable": false
+  },
+  {
+   "seat": 10,
+   "switch": "shoot_strongest",
+   "staying": 0.0216,
+   "switching": 0.0324,
+   "gain": 0.010799999999999997,
+   "error": 0.0028954087794299446,
+   "profitable": true
+  },
+  {
+   "seat": 10,
+   "switch": "shoot_weakest",
+   "staying": 0.0216,
+   "switching": 0.0226,
+   "gain": 0.0009999999999999974,
+   "error": 0.0025556196900164935,
+   "profitable": false
+  },
+  {
+   "seat": 10,
+   "switch": "coin_flip",
+   "staying": 0.0216,
+   "switching": 0.0224,
+   "gain": 0.0007999999999999986,
+   "error": 0.0025481350042727328,
+   "profitable": false
+  },
+  {
+   "seat": 10,
+   "switch": "always_miss",
+   "staying": 0.0216,
+   "switching": 0.0,
+   "gain": -0.0216,
+   "error": 0.0014537345012071497,
+   "profitable": false
+  },
+  {
+   "seat": 11,
+   "switch": "shoot_strongest",
+   "staying": 0.0191,
+   "switching": 0.0316,
+   "gain": 0.012500000000000004,
+   "error": 0.002827332134716401,
+   "profitable": true
+  },
+  {
+   "seat": 11,
+   "switch": "shoot_weakest",
+   "staying": 0.0191,
+   "switching": 0.021,
+   "gain": 0.0019000000000000024,
+   "error": 0.0024464911608260516,
+   "profitable": false
+  },
+  {
+   "seat": 11,
+   "switch": "coin_flip",
+   "staying": 0.0191,
+   "switching": 0.0278,
+   "gain": 0.0087,
+   "error": 0.002697953113009935,
+   "profitable": true
+  },
+  {
+   "seat": 11,
+   "switch": "always_miss",
+   "staying": 0.0191,
+   "switching": 0.0,
+   "gain": -0.0191,
+   "error": 0.0013687655021953175,
+   "profitable": false
+  },
+  {
+   "seat": 12,
+   "switch": "shoot_strongest",
+   "staying": 0.026,
+   "switching": 0.0354,
+   "gain": 0.009400000000000002,
+   "error": 0.003059700638951465,
+   "profitable": true
+  },
+  {
+   "seat": 12,
+   "switch": "shoot_weakest",
+   "staying": 0.026,
+   "switching": 0.0322,
+   "gain": 0.006200000000000001,
+   "error": 0.0029605796729694676,
+   "profitable": false
+  },
+  {
+   "seat": 12,
+   "switch": "coin_flip",
+   "staying": 0.026,
+   "switching": 0.0368,
+   "gain": 0.0108,
+   "error": 0.0031018626662055815,
+   "profitable": true
+  },
+  {
+   "seat": 12,
+   "switch": "always_miss",
+   "staying": 0.026,
+   "switching": 0.0,
+   "gain": -0.026,
+   "error": 0.0015913516267626084,
+   "profitable": false
+  },
+  {
+   "seat": 13,
+   "switch": "shoot_strongest",
+   "staying": 0.0354,
+   "switching": 0.0516,
+   "gain": 0.0162,
+   "error": 0.003633479324284094,
+   "profitable": true
+  },
+  {
+   "seat": 13,
+   "switch": "shoot_weakest",
+   "staying": 0.0354,
+   "switching": 0.039,
+   "gain": 0.003599999999999999,
+   "error": 0.003303102178256071,
+   "profitable": false
+  },
+  {
+   "seat": 13,
+   "switch": "coin_flip",
+   "staying": 0.0354,
+   "switching": 0.044,
+   "gain": 0.008599999999999997,
+   "error": 0.003439110931621718,
+   "profitable": false
+  },
+  {
+   "seat": 13,
+   "switch": "always_miss",
+   "staying": 0.0354,
+   "switching": 0.0,
+   "gain": -0.0354,
+   "error": 0.0018478863601423116,
+   "profitable": false
+  },
+  {
+   "seat": 14,
+   "switch": "shoot_strongest",
+   "staying": 0.0791,
+   "switching": 0.0758,
+   "gain": -0.0032999999999999974,
+   "error": 0.0046146712775668,
+   "profitable": false
+  },
+  {
+   "seat": 14,
+   "switch": "shoot_weakest",
+   "staying": 0.0791,
+   "switching": 0.0936,
+   "gain": 0.014499999999999999,
+   "error": 0.004924644860291958,
+   "profitable": false
+  },
+  {
+   "seat": 14,
+   "switch": "coin_flip",
+   "staying": 0.0791,
+   "switching": 0.084,
+   "gain": 0.004900000000000002,
+   "error": 0.004761629868017882,
+   "profitable": false
+  },
+  {
+   "seat": 14,
+   "switch": "always_miss",
+   "staying": 0.0791,
+   "switching": 0.0,
+   "gain": -0.0791,
+   "error": 0.002698947757923447,
+   "profitable": false
+  }
+ ],
+ "explained_variance": 0.23810923610936174,
+ "n": 15,
+ "arm": "local",
+ "seed": 3,
+ "accuracies": [
+  0.4,
+  0.4286,
+  0.4571,
+  0.4857,
+  0.5143,
+  0.5429,
+  0.5714,
+  0.6,
+  0.6286,
+  0.6571,
+  0.6857,
+  0.7143,
+  0.7429,
+  0.7714,
+  0.8
+ ],
+ "training_minutes": 13.843668901920319,
+ "total_minutes": 27.366719567775725,
+ "torch": "2.2.2",
+ "python": "3.11.5"
+}

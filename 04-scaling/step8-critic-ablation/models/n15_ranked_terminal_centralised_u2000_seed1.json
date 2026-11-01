@@ -1,0 +1,152 @@
+{
+ "run": "n15_ranked_terminal_centralised_u2000_seed1",
+ "step": "step8-critic-ablation",
+ "deliverable": "04-scaling",
+ "notebook": "train_and_measure.py",
+ "model_class": "SharedActorCritic",
+ "layers": [
+  {
+   "name": "actor_first.weight",
+   "shape": [
+    64,
+    4
+   ],
+   "parameters": 256
+  },
+  {
+   "name": "actor_first.bias",
+   "shape": [
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "actor_second.weight",
+   "shape": [
+    3,
+    64
+   ],
+   "parameters": 192
+  },
+  {
+   "name": "actor_second.bias",
+   "shape": [
+    3
+   ],
+   "parameters": 3
+  },
+  {
+   "name": "critic_first.weight",
+   "shape": [
+    64,
+    45
+   ],
+   "parameters": 2880
+  },
+  {
+   "name": "critic_first.bias",
+   "shape": [
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "critic_second.weight",
+   "shape": [
+    1,
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "critic_second.bias",
+   "shape": [
+    1
+   ],
+   "parameters": 1
+  }
+ ],
+ "activation": "tanh",
+ "actor_parameters": 515,
+ "critic_parameters": 3009,
+ "total_parameters": 3524,
+ "actions": [
+  "shoot_left",
+  "shoot_right",
+  "miss"
+ ],
+ "files": {
+  "weights": "n15_ranked_terminal_centralised_u2000_seed1.pt",
+  "record": "n15_ranked_terminal_centralised_u2000_seed1.json"
+ },
+ "weights_sha256": "dd04e571ea5fa140c9d50c33f531add79b4f7e0a0d92d1ca8d94a191290b9c7c",
+ "file_sha256": "8db123607eea031dd8093f6fe333877ddcad5ec5419ad5b3aa05df518449e1bf",
+ "code": {
+  "notebook_source_sha256": "1ee007a65b2c8a27a20a09c2f9ca1a5da5c6e0d98eac80686f35d5aa2021873a",
+  "gruel_env_sha256": "0f9fb6a88de77b3662effb2ab30c2e2bd239c205f31519f28d6e7108505c2817",
+  "git_commit_when_trained": "21d5cf2ed17558a0f5594ef9d583a54b1158afae",
+  "note": "the code hashes pin the exact source; the commit may predate uncommitted edits"
+ },
+ "software": {
+  "python": "3.11.5",
+  "torch": "2.2.2",
+  "numpy": "1.26.4",
+  "gymnasium": "0.29.1",
+  "pettingzoo": "1.24.3",
+  "torch_threads": 1
+ },
+ "machine": {
+  "system": "Darwin",
+  "release": "27.2.0",
+  "processor": "arm64"
+ },
+ "saved_utc": "2026-10-31T13:25:48Z",
+ "algorithm": "PPO with a shared actor and a centralised critic",
+ "observation": "own accuracy, left neighbour's accuracy, right neighbour's accuracy, share of players alive",
+ "critic_input": "every seat's accuracy and alive flag (2N numbers) plus a one-hot of the player being scored (N numbers): 45 inputs",
+ "game": {
+  "n_players": 15,
+  "reward": "terminal",
+  "seating": "ranked",
+  "accuracies_ascending": [
+   0.4,
+   0.428571,
+   0.457143,
+   0.485714,
+   0.514286,
+   0.542857,
+   0.571429,
+   0.6,
+   0.628571,
+   0.657143,
+   0.685714,
+   0.714286,
+   0.742857,
+   0.771429,
+   0.8
+  ],
+  "stagnation_rounds": 10
+ },
+ "training": {
+  "updates": 2000,
+  "episodes_per_update": 96,
+  "training_episodes": 192000,
+  "optimiser": "Adam",
+  "learning_rate": 0.003,
+  "clip": 0.2,
+  "epochs": 4,
+  "minibatch_size": 256,
+  "value_coefficient": 0.5,
+  "entropy_coefficient": 0.01,
+  "discount": 1.0,
+  "advantage": "return minus the critic's value, normalised per batch"
+ },
+ "seeds": {
+  "seed": 1,
+  "torch": 2001,
+  "training_game": 1001,
+  "minibatch_shuffle": 1
+ },
+ "seconds": 876.8,
+ "seconds_cover": "training only"
+}

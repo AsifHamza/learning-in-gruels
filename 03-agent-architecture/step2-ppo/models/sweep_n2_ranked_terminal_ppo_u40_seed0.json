@@ -1,0 +1,137 @@
+{
+ "run": "sweep_n2_ranked_terminal_ppo_u40_seed0",
+ "step": "step2-ppo",
+ "deliverable": "03-agent-architecture",
+ "notebook": "step2_ppo.ipynb",
+ "model_class": "ActorCritic",
+ "layers": [
+  {
+   "name": "actor_first.weight",
+   "shape": [
+    64,
+    4
+   ],
+   "parameters": 256
+  },
+  {
+   "name": "actor_first.bias",
+   "shape": [
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "actor_second.weight",
+   "shape": [
+    3,
+    64
+   ],
+   "parameters": 192
+  },
+  {
+   "name": "actor_second.bias",
+   "shape": [
+    3
+   ],
+   "parameters": 3
+  },
+  {
+   "name": "critic_first.weight",
+   "shape": [
+    64,
+    4
+   ],
+   "parameters": 256
+  },
+  {
+   "name": "critic_first.bias",
+   "shape": [
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "critic_second.weight",
+   "shape": [
+    1,
+    64
+   ],
+   "parameters": 64
+  },
+  {
+   "name": "critic_second.bias",
+   "shape": [
+    1
+   ],
+   "parameters": 1
+  }
+ ],
+ "activation": "tanh",
+ "actor_parameters": 515,
+ "critic_parameters": 385,
+ "total_parameters": 900,
+ "actions": [
+  "shoot_left",
+  "shoot_right",
+  "miss"
+ ],
+ "files": {
+  "weights": "sweep_n2_ranked_terminal_ppo_u40_seed0.pt",
+  "record": "sweep_n2_ranked_terminal_ppo_u40_seed0.json"
+ },
+ "weights_sha256": "8c8096a9cd66c432da86e61cad1a2811bc5bd063f729d08e496b27c0de864a4f",
+ "file_sha256": "095f4729fcc3d7155042b47435c8d296087905c673cc151cd6632e73d3f85c9b",
+ "code": {
+  "notebook_source_sha256": "40139fd5f754c94822e6002fad97ae332c5705d4df0e2bf8691c6632d636f0cb",
+  "gruel_env_sha256": "0f9fb6a88de77b3662effb2ab30c2e2bd239c205f31519f28d6e7108505c2817",
+  "git_commit_when_trained": "21d5cf2ed17558a0f5594ef9d583a54b1158afae",
+  "note": "the code hashes pin the exact source; the commit may predate uncommitted edits"
+ },
+ "software": {
+  "python": "3.11.5",
+  "torch": "2.2.2",
+  "numpy": "1.26.4",
+  "gymnasium": "0.29.1",
+  "pettingzoo": "1.24.3",
+  "torch_threads": 1
+ },
+ "machine": {
+  "system": "Darwin",
+  "release": "27.2.0",
+  "processor": "arm64"
+ },
+ "saved_utc": "2026-10-31T11:11:48Z",
+ "algorithm": "PPO, one shared actor and a critic that sees the actor's four numbers",
+ "observation": "own accuracy, left neighbour's accuracy, right neighbour's accuracy, share of players alive",
+ "critic_input": "the same four numbers as the actor: 4 inputs",
+ "game": {
+  "n_players": 2,
+  "reward": "terminal",
+  "seating": "ranked",
+  "accuracies_ascending": [
+   0.4,
+   0.8
+  ],
+  "stagnation_rounds": 10
+ },
+ "training": {
+  "updates": 40,
+  "episodes_per_update": 64,
+  "training_episodes": 2560,
+  "optimiser": "Adam",
+  "learning_rate": 0.003,
+  "clip": 0.2,
+  "epochs": 4,
+  "minibatch_size": 64,
+  "value_coefficient": 0.5,
+  "entropy_coefficient": 0.01,
+  "discount": 1.0
+ },
+ "seeds": {
+  "torch": 2000,
+  "training_game": 1000,
+  "minibatch_shuffle": 0
+ },
+ "seconds": 1.0,
+ "seconds_cover": "training only"
+}

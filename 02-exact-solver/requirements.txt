@@ -1,0 +1,9 @@
+# Deliverable 02 — the exact solver.
+#
+# The solver itself needs NOTHING except plain Python. No numpy, no torch.
+# That is worth noticing: the hardest maths in the project has the fewest
+# dependencies. Everything below is only for running the notebooks and
+# drawing one chart.
+
+jupyter==1.0.0
+jupytext==1.16.2

@@ -1,0 +1,7 @@
+numpy==1.26.4
+gymnasium==0.29.1
+pettingzoo==1.24.3
+torch==2.2.2
+# Do not lower matplotlib to 3.8: with IPython 9, 3.8.4 saves a text placeholder
+# in notebooks instead of the chart. 3.9.4 and 3.10.7 both save it correctly.
+matplotlib==3.10.7
