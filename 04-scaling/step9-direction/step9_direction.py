@@ -234,6 +234,102 @@ else:
     print("  -> no measurable dependence on the player count")
 
 # %% [markdown]
+# ### The flagged run, counted as left and left out
+#
+# One run is more than 0.10 from both directions and is counted as left, the nearer one. The
+# rates below leave it out instead, to show how much the classification depends on it.
+
+# %%
+flagged = []
+for n in PLAYER_COUNTS:
+    for seed in SEEDS:
+        if MIXED[(n, seed)]:
+            flagged.append((n, seed))
+print("  flagged runs (N, seed):", flagged)
+for n in PLAYER_COUNTS:
+    kept = [seed for seed in SEEDS if not MIXED[(n, seed)]]
+    rights = [seed for seed in kept if DIRECTION[(n, seed)] == "right"]
+    lower, upper = exact_interval(len(rights), len(kept))
+    print("  N=%-3d without flagged runs: right in %d of %d, rate %.4f, 95%% interval %.4f to %.4f"
+          % (n, len(rights), len(kept), len(rights) / len(kept), lower, upper))
+kept_all = total_runs - len(flagged)
+right_all = 0
+for n in PLAYER_COUNTS:
+    for seed in SEEDS:
+        if DIRECTION[(n, seed)] == "right" and not MIXED[(n, seed)]:
+            right_all = right_all + 1
+lower, upper = exact_interval(right_all, kept_all)
+print("  all three counts without flagged runs: right in %d of %d, rate %.4f, 95%% interval %.4f to %.4f"
+      % (right_all, kept_all, right_all / kept_all, lower, upper))
+
+# %% [markdown]
+# ## Which way do the seeds of steps 5 and 6 fire?
+#
+# Steps 5 and 6 compare reward profiles and seatings with seeds 0 to 2. Under ranked seating one
+# right-shooting seed among three would move a pooled mean a long way, so their direction
+# matters. It can be read straight from each saved actor, without playing: with the whole field
+# alive every seat acts equally often, so the share of shots at the stronger neighbour is the sum
+# over seats of the probability of shooting the stronger neighbour, divided by the sum of the
+# probability of shooting at all. The method is checked first on this step's own sixty runs,
+# whose direction was measured by play.
+
+# %%
+def opening_share(model, n):
+    game = GruelEnv(n=n, reward="terminal", seating="ranked", seed=0)
+    game.reset(seed=0)
+    stronger_total = 0.0
+    firing_total = 0.0
+    for name in game.possible_agents:
+        position = game.position_of_agent[name]
+        left, right = game.neighbours(position)
+        observation = game.observe(name)
+        with torch.no_grad():
+            probabilities = torch.softmax(model.action_logits(torch.from_numpy(observation)), dim=-1)
+        if game.accuracies[left] > game.accuracies[right]:
+            stronger = float(probabilities[SHOOT_LEFT])
+        else:
+            stronger = float(probabilities[SHOOT_RIGHT])
+        stronger_total = stronger_total + stronger
+        firing_total = firing_total + float(probabilities[SHOOT_LEFT]) + float(probabilities[SHOOT_RIGHT])
+    return stronger_total / firing_total
+
+
+def load_saved(folder, run, n):
+    with open(os.path.join(folder, "models", run + ".json")) as handle:
+        record = json.load(handle)
+    model = script.SharedActorCritic(n_players=n, critic_view="centralised")
+    model.load_state_dict(torch.load(os.path.join(folder, "models", run + ".pt")))
+    return model, script.weights_sha256(model) == record["weights_sha256"]
+
+
+def direction_of(share, n):
+    if abs(share - 2.0 / n) <= abs(share - (n - 2.0) / n):
+        return "left"
+    return "right"
+
+
+agree = 0
+hashes_ok = 0
+for n in PLAYER_COUNTS:
+    for seed in SEEDS:
+        model, ok = load_saved(".", "n%d_ranked_terminal_centralised_u2000_seed%d" % (n, seed), n)
+        if ok:
+            hashes_ok = hashes_ok + 1
+        if direction_of(opening_share(model, n), n) == DIRECTION[(n, seed)]:
+            agree = agree + 1
+print("  this step's runs: hashes match %d of %d; direction read from the actor agrees with play in %d of %d"
+      % (hashes_ok, total_runs, agree, total_runs))
+print()
+for folder, profile in [("../step5-reward-profile", "shaped"), ("../step6-seating", "terminal")]:
+    for n in [10, 15]:
+        cells = []
+        for seed in [0, 1, 2]:
+            model, ok = load_saved(folder, "n%d_ranked_%s_centralised_u2000_seed%d" % (n, profile, seed), n)
+            share = opening_share(model, n)
+            cells.append("seed %d %.4f %s%s" % (seed, share, direction_of(share, n), "" if ok else " HASH MISMATCH"))
+        print("  %-24s ranked, %-8s N=%-3d %s" % (folder[3:], profile, n, "   ".join(cells)))
+
+# %% [markdown]
 # ## The two references, measured
 #
 # `next_weaker` always shoots left under ranked seating; `next_stronger`, its mirror, always shoots

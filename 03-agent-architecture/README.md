@@ -253,7 +253,15 @@ average: explained variance is slightly lower than the local critic's at every s
 *What it leaves open:* whether the N=7 advantage holds at larger N. Folder 04 step 8 tested it at 10 and 15
 players without an answer key: the switch test finds no measurable difference between the critics.
 
-**Steps 1–3 build. Steps 4–5 instrument. Step 6 validates. Steps 7–9 investigate. Step 10 tests the architecture.** The folder ends on a
+**11 — [`step11-what-the-actor-sees/`](step11-what-the-actor-sees/) · can a four-number actor play the equilibrium?**
+The actor sees four numbers, so two states can look the same to it while the equilibrium asks for different
+actions. Using the solver and the saved actors of steps 6 and 9, this step counts those conflicts. At N=5
+there are none, and the actors agree with the equilibrium on 0.9888 of decisions. At N=7 two observations
+conflict, so no four-number policy can agree on more than 0.9871 of decisions; the trained actors agree on
+0.9144. The observation limit is real but small, and most of the seven-player shortfall is in states a
+four-number actor could play correctly. It trains nothing.
+
+**Steps 1–3 build. Steps 4–5 instrument. Step 6 validates. Steps 7–9 investigate. Step 10 tests the architecture. Step 11 tests what the actor can represent.** The folder ends on a
 step that runs and prints a result, and that result is a **failure with a readable cause** — which is a
 better place to end than a clean pass, because it says what the method can and cannot yet do.
 

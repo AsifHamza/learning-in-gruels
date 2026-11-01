@@ -533,6 +533,21 @@ for player in failing_state:
 print(f"  largest gain from switching to any single action: {largest_gain:.1e}")
 print(f"  an equilibrium: {largest_gain <= 1e-12}")
 
+# The full certificate: every player's action, the two probabilities in full, and the
+# values every smaller state was given.
+print()
+print("  the full profile:")
+for player in failing_state:
+    if player in fixed_actions:
+        print(f"    p{player}: shoots p{fixed_actions[player]}")
+    else:
+        print(f"    p{player}: mixes, see below")
+print(f"    p7 shoots p6 with probability {seven_shoots:.12f}")
+print(f"    p8 shoots p7 with probability {eight_shoots:.12f}")
+print("  accuracies:", [round(a, 4) for a in failing_accuracies])
+print("  continuation values: the solver's pure equilibria of every smaller state, solved above")
+print("  arithmetic: double precision; an equilibrium means no gain above 1e-12")
+
 # %% [markdown]
 # So what stops the solver is not that the game has no equilibrium at N=9. It is that the game has
 # no equilibrium **in pure strategies**, and backward induction over pure strategies has nothing to

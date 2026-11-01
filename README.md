@@ -128,6 +128,7 @@ The report states its methods and results; this repository holds the code, the s
 |---|---|
 | The exact answers | `01-environment/step2`, `02-exact-solver/step2` to `step5` |
 | Validation against the exact answers | `03-agent-architecture/step1` to `step6`, `step9`; `04-scaling/step3` |
+| What the actor can see | `03-agent-architecture/step11` |
 | Is the centralised critic needed? | `03-agent-architecture/step10`; `04-scaling/step8` |
 | Seating and reward at five players | `03-agent-architecture/step7`, `step8` |
 | Behaviour at 10 and 15 players | `04-scaling/step1` to `step4` |
@@ -187,7 +188,7 @@ If you only want the picture: [`01-environment/step5-render/`](01-environment/st
 
 ## What is built, and verified
 
-**All four deliverables are complete.** 29 notebooks (5 in folder 01, 5 in 02, 10 in 03, 9 in 04) are
+**All four deliverables are complete.** 30 notebooks (5 in folder 01, 5 in 02, 11 in 03, 9 in 04) are
 executed and saved **with their outputs**, so they can be read without running anything.
 
 | Check | Result |
@@ -278,7 +279,7 @@ learning-in-gruels/
 │   ├── step4-how-far/           the walk upward: reaches N=8, refused at N=9
 │   └── step5-equilibrium/       why the criterion works, and the targeting policy
 │
-├── 03-agent-architecture/       README + 10 steps, all with executed notebooks
+├── 03-agent-architecture/       README + 11 steps, all with executed notebooks
 │   ├── step1-reinforce/         no gate — REINFORCE at N=2
 │   ├── step2-ppo/               no gate — PPO at N=2, same answer, no speed-up at matched budgets
 │   ├── step3-mappo/             no gate — the architecture, at N=3
@@ -288,7 +289,8 @@ learning-in-gruels/
 │   ├── step7-seating/           no gate — ranked against random
 │   ├── step8-reward-profile/    no gate — terminal against shaped
 │   ├── step9-player-count/      N=3, 5 and 7 against the exact answers — N=3 and N=5 pass, N=7 does not
-│   └── step10-critic-ablation/  is the centralised critic needed? MAPPO against independent PPO
+│   ├── step10-critic-ablation/  is the centralised critic needed? MAPPO against independent PPO
+│   └── step11-what-the-actor-sees/  can a four-number actor play the equilibrium? no training
 │
 ├── 04-scaling/                  README + GAME.md + 7 steps, all executed
 │   ├── GAME.md                  the game end to end: counts, accuracies, contraction, rewards
