@@ -530,6 +530,176 @@ for n in PLAYER_COUNTS:
     print()
 
 # %% [markdown]
+# ## 3. Where does the centralised critic's seven-player advantage sit?
+#
+# Step 10 trained the seven-player agent five times with a centralised critic and five times with
+# a local one, paired by seed so both start from the same actor weights. The centralised critic's
+# runs end closer to the equilibrium. Here both sets of saved actors are read decision by decision,
+# by players alive, to see where in the game the difference lies. Only the actor is used, so the
+# two critics' different shapes do not matter; the hash is checked over the whole saved model.
+#
+# One local run fires right round the circle (step 10). Its direction is read from the actor at the
+# opening position, and the comparison is repeated without that seed pair.
+
+# %%
+class Actor(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.actor_first = nn.Linear(OBSERVATION_SIZE, HIDDEN_SIZE)
+        self.actor_second = nn.Linear(HIDDEN_SIZE, N_ACTIONS)
+        self.activation = nn.Tanh()
+
+    def action_logits(self, observation):
+        hidden = self.activation(self.actor_first(observation))
+        return self.actor_second(hidden)
+
+
+def state_dict_sha256(weights):
+    """The training steps' weight hash, computed straight from a saved state_dict."""
+    digest = hashlib.sha256()
+    for name in sorted(weights):
+        tensor = weights[name].detach().cpu().contiguous()
+        digest.update(name.encode())
+        digest.update(str(list(tensor.shape)).encode())
+        digest.update(str(tensor.dtype).encode())
+        digest.update(tensor.numpy().tobytes())
+    return digest.hexdigest()
+
+
+def load_ablation_actor(critic, seed):
+    run = "n7_ranked_terminal_%s_u2000_seed%d" % (critic, seed)
+    path = "../step10-critic-ablation/models/" + run
+    with open(path + ".json") as handle:
+        record = json.load(handle)
+    weights = torch.load(path + ".pt")
+    actor = Actor()
+    actor_weights = {}
+    for name in weights:
+        if name.startswith("actor_"):
+            actor_weights[name] = weights[name]
+    actor.load_state_dict(actor_weights)
+    actor.eval()
+    return actor, state_dict_sha256(weights) == record["weights_sha256"]
+
+
+def opening_share(model, n):
+    """Share of shots at the stronger neighbour with the whole field alive, read from the actor."""
+    game = GruelEnv(n=n, reward="terminal", seating="ranked", seed=SEED)
+    game.reset(seed=SEED)
+    stronger_total = 0.0
+    firing_total = 0.0
+    for name in game.possible_agents:
+        position = game.position_of_agent[name]
+        left, right = game.neighbours(position)
+        probabilities = action_probabilities(model, game.observe(name))
+        if game.accuracies[left] > game.accuracies[right]:
+            stronger_total = stronger_total + float(probabilities[SHOOT_LEFT])
+        else:
+            stronger_total = stronger_total + float(probabilities[SHOOT_RIGHT])
+        firing_total = firing_total + float(probabilities[SHOOT_LEFT]) + float(probabilities[SHOOT_RIGHT])
+    return stronger_total / firing_total
+
+
+def agreement_by_alive(model, n):
+    """Weighted agreement with the equilibrium for each number alive, and overall."""
+    rows = DECISIONS[n]
+    result = {}
+    for alive in list(range(n, 2, -1)) + ["all"]:
+        if alive == "all":
+            here = rows
+        else:
+            here = [row for row in rows if len(row["survivors"]) == alive]
+        weight_here = sum(row["weight"] for row in here)
+        agreement = 0.0
+        for row in here:
+            agreement = agreement + row["weight"] * float(action_probabilities(model, row["observation"])[row["action"]])
+        result[alive] = agreement / weight_here
+    return result
+
+
+ABLATION_SEEDS = [0, 1, 2, 3, 4]
+BY_ALIVE = {}
+DIRECTION_7 = {}
+for critic in ["centralised", "local"]:
+    for seed in ABLATION_SEEDS:
+        actor, ok = load_ablation_actor(critic, seed)
+        share = opening_share(actor, 7)
+        if abs(share - 2.0 / 7) <= abs(share - 5.0 / 7):
+            DIRECTION_7[(critic, seed)] = "left"
+        else:
+            DIRECTION_7[(critic, seed)] = "right"
+        BY_ALIVE[(critic, seed)] = agreement_by_alive(actor, 7)
+        print("%-11s seed %d  hash %-5s  opening share %.4f (%s)  agreement %.4f"
+              % (critic, seed, ok, share, DIRECTION_7[(critic, seed)], BY_ALIVE[(critic, seed)]["all"]))
+
+
+def mean_of(values):
+    return sum(values) / len(values)
+
+
+def paired_difference(seeds, how_many_alive):
+    differences = []
+    for seed in seeds:
+        differences.append(BY_ALIVE[("centralised", seed)][how_many_alive] - BY_ALIVE[("local", seed)][how_many_alive])
+    mean = mean_of(differences)
+    spread = 0.0
+    for value in differences:
+        spread = spread + (value - mean) ** 2
+    standard_error = (spread / (len(differences) - 1)) ** 0.5 / len(differences) ** 0.5
+    return mean, standard_error
+
+
+both_left = []
+for seed in ABLATION_SEEDS:
+    if DIRECTION_7[("centralised", seed)] == "left" and DIRECTION_7[("local", seed)] == "left":
+        both_left.append(seed)
+
+print()
+print("seeds where both runs fire left:", both_left)
+print()
+print("alive   share    ceiling   centralised   local    difference (s.e.)   on both-left seeds (s.e.)")
+total_weight = sum(row["weight"] for row in DECISIONS[7])
+for alive in list(range(7, 2, -1)) + ["all"]:
+    if alive == "all":
+        share_here = 1.0
+        ceiling_here = CEILING[7]
+    else:
+        here = [row for row in DECISIONS[7] if len(row["survivors"]) == alive]
+        share_here = sum(row["weight"] for row in here) / total_weight
+        groups = group_by_observation(here)
+        best = 0.0
+        for key in groups:
+            weight_by_action = {}
+            for row in groups[key]:
+                weight_by_action[row["action"]] = weight_by_action.get(row["action"], 0.0) + row["weight"]
+            best = best + max(weight_by_action.values())
+        ceiling_here = best / sum(row["weight"] for row in here)
+    centralised = mean_of([BY_ALIVE[("centralised", seed)][alive] for seed in ABLATION_SEEDS])
+    local = mean_of([BY_ALIVE[("local", seed)][alive] for seed in ABLATION_SEEDS])
+    difference, error = paired_difference(ABLATION_SEEDS, alive)
+    left_difference, left_error = paired_difference(both_left, alive)
+    print("%-6s  %.4f   %.4f    %.4f        %.4f   %+.4f (%.4f)     %+.4f (%.4f)"
+          % (str(alive), share_here, ceiling_here, centralised, local, difference, error,
+             left_difference, left_error))
+
+# %% [markdown]
+# ### With three alive, seed by seed
+#
+# The difference with three players alive, for each pair that fires left, to show whether one pair
+# carries it.
+
+# %%
+for seed in both_left:
+    centralised = BY_ALIVE[("centralised", seed)][3]
+    local = BY_ALIVE[("local", seed)][3]
+    print("seed %d   centralised %.4f   local %.4f   difference %+.4f" % (seed, centralised, local, centralised - local))
+positive = 0
+for seed in both_left:
+    if BY_ALIVE[("centralised", seed)][3] > BY_ALIVE[("local", seed)][3]:
+        positive = positive + 1
+print("pairs where the centralised critic's actor agrees more with three alive: %d of %d" % (positive, len(both_left)))
+
+# %% [markdown]
 # ## What this step establishes, derived from the measurements
 
 # %%

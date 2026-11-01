@@ -34,3 +34,5 @@ It runs in a few seconds. Nothing is random.
 **So the observation limit is real but small, and it is not what makes the seven-player agent fail.** Most of the disagreement is in states a four-number actor could play correctly.
 
 Step 9's five-player seeds 0 to 2 are the same configuration as step 6's seeds 0 to 2, and the notebook confirms their saved weights are identical, so they are not counted twice.
+
+**Where the centralised critic's seven-player advantage sits.** Step 10's ten seven-player actors (five per critic, paired by seed) are read the same way. On the four pairs where both runs fire left, the two critics' actors agree with the equilibrium equally with seven and six alive (differences +0.0000 and -0.0007). They separate later, most with three alive, where the centralised critic's actors agree 0.1815 more (standard error 0.0382), and more in all four pairs. Over all decisions the difference on those pairs is +0.0827 (0.0496). With three alive the local critic's four numbers describe the whole state, so at those decisions the centralised critic has no extra information; the advantage must come from training as a whole.
